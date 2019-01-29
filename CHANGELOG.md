@@ -4,6 +4,7 @@
 1.5.4
 ---------
 Tidied up code using nuget for ionic and removing code not required (eg Bouncy Castle).
+Updated example implementation
 
 1.5.3
 ---------

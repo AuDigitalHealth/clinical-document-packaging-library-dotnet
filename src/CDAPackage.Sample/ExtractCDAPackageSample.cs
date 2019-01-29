@@ -45,6 +45,42 @@ namespace Nehta.VendorLibrary.CDAPackage.Sample
             }
         }
 
+        public void ExtractCDAPackageWithCheck()
+        {
+            CDAPackage newPackage;
+            string message = "";
+
+            // Extract the contents of a CDA package file and validate ths signature
+            try
+            {
+                // Signature is verified on this call, with an exception thrown if the validation fails
+                newPackage = CDAPackageUtility.Extract("CdaPackageFilePath.zip", VerifyCertificate);
+            }
+            catch (Exception ex)
+            {
+                // If exception thrown due to failed signature validation, capture the reason.
+                // We recommend displaying the error to the user and continue to render the document.
+                // This way the user can make a judgement call on whether or not to trust the
+                // information contained within the document. 
+                message = ex.Message;
+                // No Signature validation checked to allow user to view package still
+                newPackage = CDAPackageUtility.Extract("CdaPackageFilePath.zip", null);
+            }
+
+            // Get CDA document content
+            byte[] cdaRoodDocumentContent = newPackage.CDADocumentRoot.FileContent;
+
+            // Get attachments if they exist
+            if (newPackage.CDADocumentAttachments.Count == 2)
+            {
+                byte[] attachment1 = newPackage.CDADocumentAttachments[0].FileContent;
+                string fileName1 = newPackage.CDADocumentAttachments[0].FileName;
+
+                byte[] attachment2 = newPackage.CDADocumentAttachments[1].FileContent;
+                string fileName2 = newPackage.CDADocumentAttachments[1].FileName;
+            }
+        }
+
         public void VerifyCertificate(X509Certificate2 certificate)
         {
             // This is an sample certificate check, which does an online revocation check.

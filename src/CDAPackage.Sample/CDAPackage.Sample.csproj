@@ -37,6 +37,10 @@
     <DocumentationFile>bin\Release\Nehta.VendorLibrary.CDAPackage.Sample.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Nehta.VendorLibrary.Common, Version=4.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nehta.VendorLibrary.Common.4.2.0.1\lib\net40\Nehta.VendorLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -62,13 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CDAPackage\CDAPackage.csproj">
-      <Project>{691adc5a-8acb-433e-846a-84b256e2b934}</Project>
+      <Project>{691ADC5A-8ACB-433E-846A-84B256E2B934}</Project>
       <Name>CDAPackage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{0bdb0698-cb73-4e7b-a182-805831d3a5ac}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
