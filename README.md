@@ -1,4 +1,4 @@
-# CDA Packagin Library
+# CDA Packaging Library
 
 This is a software utility library for creating CDA packages using the XDM profile
 using .NET.
