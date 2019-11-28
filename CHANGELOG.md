@@ -1,5 +1,7 @@
 ### Change Log/Revision History
 
+No version change
+Updated DotNetZip from 1.9.1.8 to 1.11.0 due to a security vulnerability (High severity). 
 
 1.5.4
 ---------
