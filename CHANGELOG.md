@@ -3,6 +3,10 @@
 No version change
 Updated DotNetZip from 1.9.1.8 to 1.11.0 due to a security vulnerability (High severity). 
 
+1.6.0
+=====
+Added support for netstandard2.0
+
 1.5.4
 ---------
 Tidied up code using nuget for ionic and removing code not required (eg Bouncy Castle).

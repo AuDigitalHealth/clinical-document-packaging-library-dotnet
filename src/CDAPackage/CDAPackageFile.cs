@@ -28,8 +28,17 @@ namespace Nehta.VendorLibrary.CDAPackage
         /// </summary>
         public enum FileType
         {
+            /// <summary>
+            /// 
+            /// </summary>
             RootDocument,
+            /// <summary>
+            /// 
+            /// </summary>
             Signature,
+            /// <summary>
+            /// 
+            /// </summary>
             Attachment
         }
 

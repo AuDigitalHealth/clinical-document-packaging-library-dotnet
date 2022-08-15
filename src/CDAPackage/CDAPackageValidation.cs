@@ -30,6 +30,7 @@ namespace Nehta.VendorLibrary.CDAPackage
         /// Validates a CDAPackage.
         /// </summary>
         /// <param name="package">The CDAPackage to validate.</param>
+        /// <param name="validateApprover">Validate Approver.</param>
         internal static void ValidateCDAPackage(CDAPackage package, bool validateApprover)
         {
             ValidationBuilder vb = new ValidationBuilder("package");

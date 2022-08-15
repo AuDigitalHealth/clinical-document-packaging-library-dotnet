@@ -264,7 +264,7 @@ namespace Nehta.VendorLibrary.CDAPackage
             {
                 rootDocument.Load(new MemoryStream(package.CDADocumentRoot.FileContent));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ValidationException("package", null, "CDA_ROOT.XML cannot be extracted as an XML document.");
             }
@@ -337,7 +337,7 @@ namespace Nehta.VendorLibrary.CDAPackage
                 var eSignatureElement = signatureDocument.GetElementsByTagName("eSignature", "*")[0] as XmlElement;
                 eSignature = eSignatureElement.Deserialize<eSignatureType>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new SignatureVerificationException("Error extracting eSignature");
             }

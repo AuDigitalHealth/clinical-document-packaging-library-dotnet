@@ -93,7 +93,7 @@ namespace Nehta.VendorLibrary.CDAPackage.Sample
             // Setup the chain
             var chain = new X509Chain();
             chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-            chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+            chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EndCertificateOnly;
 
             // Perform the validation   
             chain.Build(certificate);

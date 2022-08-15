@@ -10,16 +10,39 @@ namespace Nehta.VendorLibrary.CDAPackage
     /// </summary>
     public class Approver
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Uri PersonId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> PersonTitles { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> PersonGivenNames { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string PersonFamilyName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public List<string> PersonNameSuffixes { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Approver()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="personId"></param>
+        /// <param name="personFamilyName"></param>
         public Approver(Uri personId, string personFamilyName)
         {
             this.PersonId = personId;
