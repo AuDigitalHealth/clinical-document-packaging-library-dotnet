@@ -1,7 +1,5 @@
 del *.nupkg
 
-msbuild /p:Configuration=Release
-
 REM Use dotnet for packaing now
 REM NuGet.exe pack CDAPackage/CDAPackage.csproj -Properties Configuration=Release
 dotnet pack .\CDAPackage\CDAPackage.csproj -c Release -o .
