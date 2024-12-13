@@ -12,10 +12,6 @@
  * under the License.
  */
 
-using System;
-using System.Xml;
-using Nehta.VendorLibrary.Common;
-
 namespace Nehta.VendorLibrary.CDAPackage
 {
     /// <summary>

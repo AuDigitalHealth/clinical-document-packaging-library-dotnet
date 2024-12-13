@@ -14,7 +14,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using Nehta.VendorLibrary.Common;
 
 namespace Nehta.VendorLibrary.CDAPackage

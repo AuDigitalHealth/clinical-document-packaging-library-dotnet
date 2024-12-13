@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using Nehta.Xsp;
 using System.Security.Cryptography.X509Certificates;
@@ -24,9 +23,9 @@ using Nehta.VendorLibrary.CDAPackage.XmlDsig;
 using System.Security.Cryptography.Xml;
 using System.IO;
 using System.Security.Cryptography;
-using Ionic.Zip;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.IO.Compression;
 
 namespace Nehta.VendorLibrary.CDAPackage
 {
@@ -56,7 +55,7 @@ namespace Nehta.VendorLibrary.CDAPackage
 
             // Validate CDAPackage
             CDAPackageValidation.ValidateCDAPackage(package, signingCert != null);
-                      
+
             var ms = new MemoryStream();
 
             // Generate signature if package operation is ADD or REPLACE
@@ -71,34 +70,46 @@ namespace Nehta.VendorLibrary.CDAPackage
                 package.CDASignature.FileName = "CDA_SIGN.XML";
             }
 
-            using (var zip = new ZipFile(Encoding.Default))
+            // Create Package
+            var zipStream = new MemoryStream();
+            using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Create, true))
             {
                 // Add folder entries
-                zip.AddEntry("IHE_XDM/", "");
-                zip.AddEntry("IHE_XDM/SUBSET01/", "");
+                archive.CreateEntry("IHE_XDM/");
+                archive.CreateEntry("IHE_XDM/SUBSET01/");
 
-                zip.AddEntry("IHE_XDM/SUBSET01/" + package.CDADocumentRoot.FileName, package.CDADocumentRoot.FileContent);
+                // CDA Doc
+                var cdaDoc = archive.CreateEntry("IHE_XDM/SUBSET01/" + package.CDADocumentRoot.FileName);
+                using (var stream = cdaDoc.Open())
+                {
+                    stream.Write(package.CDADocumentRoot.FileContent, 0, package.CDADocumentRoot.FileContent.Length);
+                }
 
-                    // Add signature if present
-                    if (signatureContent != null)
-                        zip.AddEntry("IHE_XDM/SUBSET01/" + package.CDASignature.FileName, signatureContent);
-
-                    if (package.CDADocumentAttachments != null)
+                // Add signature if present
+                if (signatureContent != null)
+                {
+                    var cdaSign = archive.CreateEntry("IHE_XDM/SUBSET01/" + package.CDASignature.FileName);
+                    using (var stream = cdaSign.Open())
                     {
-                        foreach (var file in package.CDADocumentAttachments)
+                        stream.Write(package.CDASignature.FileContent, 0, package.CDASignature.FileContent.Length);
+                    }
+                }
+
+                // CDA Attachments
+                if (package.CDADocumentAttachments != null)
+                {
+                    foreach (var file in package.CDADocumentAttachments)
+                    {
+                        var cdaAttachment = archive.CreateEntry("IHE_XDM/SUBSET01/" + file.FileName);
+                        using (var stream = cdaAttachment.Open())
                         {
-                            zip.AddEntry("IHE_XDM/SUBSET01/" + file.FileName, file.FileContent);
+                            stream.Write(file.FileContent, 0, file.FileContent.Length);
                         }
                     }
-
-                // Save output file
-                zip.Save(ms);
+                }
             }
 
-            var zipContent = ms.ToArray();
-            ms.Close();
-
-            return zipContent;
+            return zipStream.ToArray();
         }
 
         /// <summary>
@@ -187,8 +198,7 @@ namespace Nehta.VendorLibrary.CDAPackage
             Validation.ValidateArgumentRequired("package", package);
 
             // Get zip entries in zip package
-            var inputStream = new MemoryStream(package);
-            Dictionary<string, byte[]> entries = GetZipEntriesFromZipStream(ZipFile.Read(inputStream));
+            Dictionary<string, byte[]> entries = GetZipEntriesFromZipStream(package);
 
             // Check to ensure that there is only one submission set folder
             string submissionPath = null;
@@ -409,26 +419,26 @@ namespace Nehta.VendorLibrary.CDAPackage
         /// </summary>
         /// <param name="zipFile">The zip file.</param>
         /// <returns>Zip file entries and their content.</returns>
-        internal static Dictionary<string, byte[]> GetZipEntriesFromZipStream(ZipFile zipFile)
+        internal static Dictionary<string, byte[]> GetZipEntriesFromZipStream(byte[] zipFile)
         {
             var contentByFileName = new Dictionary<string, byte[]>();
+            var inputStream = new MemoryStream(zipFile);
 
-            if (zipFile != null)
+            if (zipFile.Length > 0)
             {
-                // Iterate through all entries and add their filename and contents.
-                foreach (ZipEntry entry in zipFile.Entries)
+                using (ZipArchive zipArchive = new ZipArchive(inputStream, ZipArchiveMode.Read))
                 {
-                    var readStream = new MemoryStream();
-
-                    // Ony process files.
-                    if (!entry.IsDirectory)
+                    foreach (var entry in zipArchive.Entries)
                     {
-                        entry.Extract(readStream);
-                        contentByFileName.Add(entry.FileName, readStream.ToArray());
+                        // Ony process files.
+                        if (entry.Length > 0)
+                        {
+                            var output = new MemoryStream();
+                            entry.Open().CopyTo(output);
+                            contentByFileName.Add(entry.FullName, output.ToArray());
+                        }
                     }
                 }
-
-                zipFile.Dispose();
             }
 
             return contentByFileName;
