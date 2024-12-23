@@ -1,5 +1,9 @@
 ### Change Log/Revision History
 
+1.7.0.1
+=======
+Updated sample to use correct function when signature validation fails
+
 1.7.0
 =====
 Removed DotNetZip library. No longer required as using System.IO.Compression.

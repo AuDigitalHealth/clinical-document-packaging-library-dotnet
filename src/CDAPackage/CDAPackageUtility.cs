@@ -184,7 +184,21 @@ namespace Nehta.VendorLibrary.CDAPackage
 
             return newPackage;
         }
-        
+
+        /// <summary>
+        /// Extracts a CDA package zip file without verifying the signature.
+        /// </summary>
+        /// <param name="packageFilePath">The path to the CDA package zip file to extract.</param>
+        /// <returns>A CDAPackage instance constructed from the CDA package zip file.</returns>
+        public static CDAPackage ExtractAndIgnoreSignatureVerification(string packageFilePath)
+        {
+            byte[] zipContent = File.ReadAllBytes(packageFilePath);
+
+            CDAPackage newPackage = ExtractAndIgnoreSignatureVerification(zipContent);
+
+            return newPackage;
+        }
+
         /// <summary>
         /// Extracts a CDA package zip file without verifying the signature.
         /// </summary>

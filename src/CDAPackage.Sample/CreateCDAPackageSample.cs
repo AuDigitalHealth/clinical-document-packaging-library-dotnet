@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Nehta.VendorLibrary.Common;
-using System.Xml;
 using System.IO;
 
 namespace Nehta.VendorLibrary.CDAPackage.Sample

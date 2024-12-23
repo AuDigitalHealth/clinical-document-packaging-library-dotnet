@@ -13,9 +13,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Nehta.VendorLibrary.CDAPackage.Sample
@@ -64,7 +61,7 @@ namespace Nehta.VendorLibrary.CDAPackage.Sample
                 // information contained within the document. 
                 message = ex.Message;
                 // No Signature validation checked to allow user to view package still
-                newPackage = CDAPackageUtility.Extract("CdaPackageFilePath.zip", null);
+                newPackage = CDAPackageUtility.ExtractAndIgnoreSignatureVerification("CdaPackageFilePath.zip");
             }
 
             // Get CDA document content
