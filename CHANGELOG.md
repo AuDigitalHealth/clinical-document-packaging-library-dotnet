@@ -1,5 +1,15 @@
 ### Change Log/Revision History
 
+2.0.0
+=====
+Targets frameworks updated:
+net45 -> net472
+(+) net10.0
+
+Packages Updated:
+Nehta.VendorLibrary.Common 4.3.0 -> 5.0.0
+Nehta.Xsp 1.4.0 -> 2.0.0
+
 1.7.0.1
 =======
 Updated sample to use correct function when signature validation fails

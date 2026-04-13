@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Company>Australian Digital Health Agency</Company>
     <Copyright>Copyright ©2022</Copyright>
     <Authors>Australian Digital Health Agency</Authors>
@@ -10,6 +10,6 @@
     <ProjectReference Include="..\CDAPackage\CDAPackage.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Nehta.VendorLibrary.Common" Version="4.3.0" />
+    <PackageReference Include="Nehta.VendorLibrary.Common" Version="5.0.0" />
   </ItemGroup>
 </Project>
